@@ -15,7 +15,7 @@ def input_teams():
     seen = set()
 
     for team in teams:
-        if team != "" and team not in seen:
+        if team and team not in seen:
             unique_teams.append(team)
             seen.add(team)
 
@@ -37,10 +37,8 @@ def create_schedule():
 
     print("--- LỊCH THI ĐẤU VÒNG BẢNG ---")
 
-    count = 1
-    for match in match_schedule:
+    for count, match in enumerate(match_schedule, start=1):
         print(f"{count}. {match}")
-        count += 1
 
     print(f"Tổng số trận đấu: {len(match_schedule)} trận.")
 
@@ -52,23 +50,19 @@ def generate_match_ids():
 
     print("--- MÃ TRẬN ĐẤU (MATCH ID) ---")
 
-    index = 1
-
-    for match in match_schedule:
+    for index, match in enumerate(match_schedule, start=1):
         team1, team2 = match.split(" vs ")
 
-        code1 = f"{team1[:3]:X<3}"
-        code2 = f"{team2[:3]:X<3}"
+        code1 = team1[:3].ljust(3, "X")
+        code2 = team2[:3].ljust(3, "X")
 
         match_id = f"M{index:02d}-{code1}-{code2}"
 
         print(f"Trận {index} ({match}) -> ID: {match_id}")
 
-        index += 1
-
 
 while True:
-    print("============= ESPORTS MATCHMAKER =============")
+    print("\n============= ESPORTS MATCHMAKER =============")
     print("1. Nhập danh sách Đội tuyển")
     print("2. Tạo lịch thi đấu (Combinations)")
     print("3. Tạo mã trận đấu tự động (F-String & Cắt chuỗi)")
